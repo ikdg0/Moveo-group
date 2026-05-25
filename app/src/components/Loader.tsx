@@ -1,21 +1,12 @@
 import React from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { color, spacing } from '../constants/theme';
+import { ActivityIndicator, View } from 'react-native';
+import { useTheme } from '../hooks/useTheme';
 
 export function Loader(): React.ReactElement {
+  const { color, spacing } = useTheme();
   return (
-    <View style={styles.wrap}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: spacing.xl, backgroundColor: color.background }}>
       <ActivityIndicator color={color.gold} size="large" />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  wrap: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: spacing.xl,
-    backgroundColor: color.primary,
-  },
-});
