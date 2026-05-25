@@ -1,20 +1,54 @@
 /**
- * Identité visuelle Moveo — palette stricte issue de moveo-group.be.
- * Toute couleur utilisée dans l'app DOIT être référencée ici, jamais en dur.
+ * Identité visuelle Moveo — palette stricte.
+ * TOUJOURS passer par useTheme() dans les composants, jamais importer color directement.
  */
 
-export const color = {
-  primary: '#0A0A0A',
-  gold: '#C8A96A',
-  goldDim: '#9C8554',
-  surface: '#161616',
+export interface ColorPalette {
+  primary: string;
+  gold: string;
+  goldDim: string;
+  surface: string;
+  surfaceElevated: string;
+  border: string;
+  text: string;
+  muted: string;
+  success: string;
+  danger: string;
+  /** Texte sur bouton gold (contraste inversé selon le mode) */
+  onGold: string;
+  /** Fond de l'app (status bar, nav bas) */
+  background: string;
+}
+
+export const darkColors: ColorPalette = {
+  primary:         '#0A0A0A',
+  gold:            '#C8A96A',
+  goldDim:         '#9C8554',
+  surface:         '#161616',
   surfaceElevated: '#1F1F1F',
-  border: '#2A2A2A',
-  text: '#FFFFFF',
-  muted: '#888888',
-  success: '#3FB984',
-  danger: '#E5484D',
-} as const;
+  border:          '#2A2A2A',
+  text:            '#FFFFFF',
+  muted:           '#888888',
+  success:         '#3FB984',
+  danger:          '#E5484D',
+  onGold:          '#0A0A0A',
+  background:      '#0A0A0A',
+};
+
+export const lightColors: ColorPalette = {
+  primary:         '#FAFAFA',
+  gold:            '#C8A96A',
+  goldDim:         '#9C8554',
+  surface:         '#FFFFFF',
+  surfaceElevated: '#F0F0F0',
+  border:          '#E0E0E0',
+  text:            '#0A0A0A',
+  muted:           '#6B6B6B',
+  success:         '#2D9B68',
+  danger:          '#CC2B30',
+  onGold:          '#FFFFFF',
+  background:      '#FAFAFA',
+};
 
 export const radius = {
   sm: 8,
@@ -44,11 +78,10 @@ export const font = {
   },
   weight: {
     regular: '400' as const,
-    medium: '500' as const,
-    semibold: '600' as const,
-    bold: '700' as const,
+    medium:  '500' as const,
+    semibold:'600' as const,
+    bold:    '700' as const,
   },
 } as const;
 
-export const theme = { color, radius, spacing, font } as const;
-export type Theme = typeof theme;
+export type ThemeMode = 'dark' | 'light';

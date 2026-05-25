@@ -3,6 +3,7 @@ import type { VehicleType } from '../constants/vehicles';
 export interface User {
   id: string;
   firstName: string;
+  lastName: string;
   email: string;
   phone: string;
 }

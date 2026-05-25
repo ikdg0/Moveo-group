@@ -1,14 +1,7 @@
 import React from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, View, ViewStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { color, spacing } from '../constants/theme';
+import { useTheme } from '../hooks/useTheme';
 
 interface Props {
   children: React.ReactNode;
@@ -18,50 +11,21 @@ interface Props {
   edges?: Array<'top' | 'bottom' | 'left' | 'right'>;
 }
 
-export function ScreenContainer({
-  children,
-  scroll = false,
-  padded = true,
-  style,
-  edges = ['top', 'left', 'right'],
-}: Props): React.ReactElement {
+export function ScreenContainer({ children, scroll = false, padded = true, style, edges = ['top', 'left', 'right'] }: Props): React.ReactElement {
+  const { color, spacing } = useTheme();
   const inner = (
-    <View
-      style={[
-        styles.inner,
-        padded ? styles.padded : null,
-        style,
-      ]}
-    >
+    <View style={[{ flex: 1 }, padded && { paddingHorizontal: spacing.lg, paddingBottom: spacing.lg }, style]}>
       {children}
     </View>
   );
   return (
-    <SafeAreaView style={styles.safe} edges={edges}>
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
-        {scroll ? (
-          <ScrollView
-            contentContainerStyle={styles.scroll}
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-          >
-            {inner}
-          </ScrollView>
-        ) : (
-          inner
-        )}
+    <SafeAreaView style={{ flex: 1, backgroundColor: color.background }} edges={edges}>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        {scroll
+          ? <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>{inner}</ScrollView>
+          : inner
+        }
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: color.primary },
-  flex: { flex: 1 },
-  scroll: { flexGrow: 1 },
-  inner: { flex: 1 },
-  padded: { paddingHorizontal: spacing.lg, paddingBottom: spacing.lg },
-});
