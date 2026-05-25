@@ -11,7 +11,7 @@ function required(name: string, fallback?: string): string {
 export const env = {
   port: Number(process.env.PORT ?? 4000),
   nodeEnv: process.env.NODE_ENV ?? 'development',
-  databaseUrl: required('DATABASE_URL', 'postgres://postgres:postgres@localhost:5432/moveo'),
+  mongodbUri: required('MONGODB_URI', 'mongodb://localhost:27017/moveo'),
   jwt: {
     accessSecret: required('JWT_ACCESS_SECRET', 'dev-access-secret-change-me'),
     refreshSecret: required('JWT_REFRESH_SECRET', 'dev-refresh-secret-change-me'),
